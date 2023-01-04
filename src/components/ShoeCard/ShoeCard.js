@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from 'react'
+import styled from 'styled-components/macro'
 
-import { COLORS, WEIGHTS } from '../../constants';
-import { formatPrice, pluralize, isNewShoe } from '../../utils';
-import Spacer from '../Spacer';
+import { COLORS, WEIGHTS } from '../../constants'
+import { formatPrice, pluralize, isNewShoe } from '../../utils'
+import Spacer from '../Spacer'
 
 const ShoeCard = ({
   slug,
@@ -35,7 +35,9 @@ const ShoeCard = ({
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
-          <Image alt="" src={imageSrc} />
+          <Image alt='' src={imageSrc} />
+          {variant === 'on-sale' && <Flag>Sale</Flag>}
+          {variant === 'new-release' && <Flag>Just Released</Flag>}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
@@ -44,43 +46,63 @@ const ShoeCard = ({
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          <SalePrice>{formatPrice(salePrice)}</SalePrice>
         </Row>
       </Wrapper>
     </Link>
-  );
-};
+  )
+}
 
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
-`;
+  flex: 1 1 340px;
+`
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  display: flex;
+  flex-direction: column;
+`
 
 const ImageWrapper = styled.div`
   position: relative;
-`;
+`
 
-const Image = styled.img``;
+const Image = styled.img`
+  border-radius: 16px 16px 4px 4px;
+  width: 100%;
+`
 
 const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
   font-size: 1rem;
-`;
+`
 
 const Name = styled.h3`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.gray[900]};
-`;
+`
 
-const Price = styled.span``;
+const Price = styled.span``
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
-`;
+`
 
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
-`;
+`
 
-export default ShoeCard;
+const Flag = styled.div`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  padding: 8px;
+  background-color: ${COLORS.primary};
+  color: ${COLORS.white};
+  font-weight: ${WEIGHTS.bold};
+`
+
+export default ShoeCard
